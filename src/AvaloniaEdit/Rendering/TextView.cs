@@ -934,7 +934,7 @@ namespace AvaloniaEdit.Rendering
                 _inMeasure = true;
                 try
                 {
-                    maxWidth = CreateAndMeasureVisualLines(_scrollViewport);
+                    maxWidth = CreateAndMeasureVisualLines(_scrollViewport.WithWidth(32000));
                 }
                 finally
                 {
@@ -1118,6 +1118,12 @@ namespace AvaloniaEdit.Rendering
                     availableSize.Width,
                     paragraphProperties
                 );
+
+                if(visualLine.FirstDocumentLine.LineNumber == 18)
+                {
+
+                }
+
                 textLines.Add(textLine);
                 textOffset += textLine.Length;
 
@@ -1376,7 +1382,7 @@ namespace AvaloniaEdit.Rendering
 
         private bool _canVerticallyScroll = true;
 
-        private bool _canHorizontallyScroll;
+        private bool _canHorizontallyScroll = true;
 
         /// <summary>
         /// Gets the horizontal scroll offset.

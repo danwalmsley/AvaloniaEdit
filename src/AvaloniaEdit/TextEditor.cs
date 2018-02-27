@@ -260,7 +260,7 @@ namespace AvaloniaEdit
         {
             base.OnTemplateApplied(e);
             ScrollViewer = (ScrollViewer)e.NameScope.Find("PART_ScrollViewer");
-            ScrollViewer.Content = TextArea;
+            ScrollViewer.Content = TextArea;            
         }
 
         /// <summary>

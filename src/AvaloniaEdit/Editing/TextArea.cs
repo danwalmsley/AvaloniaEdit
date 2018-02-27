@@ -1009,7 +1009,7 @@ namespace AvaloniaEdit.Editing
 
             if (TextView?.Document != null)
             {
-                result = new Size(availableSize.Width, LogicalScrollSize * TextView.DefaultLineHeight);
+                result = new Size(TextView.DesiredSize.Width / TextView.DefaultLineHeight, LogicalScrollSize * TextView.DefaultLineHeight);
 
                 base.MeasureOverride(result);
             }
@@ -1021,10 +1021,10 @@ namespace AvaloniaEdit.Editing
         {
             if (TextView?.Document != null)
             {
-                _viewPort = new Size(finalSize.Width, finalSize.Height / TextView.DefaultLineHeight);
-                _extent = new Size(finalSize.Width, LogicalScrollSize);
+                _viewPort = new Size(finalSize.Width / TextView.DefaultLineHeight, finalSize.Height / TextView.DefaultLineHeight);
+                _extent = new Size(TextView.DesiredSize.Width / TextView.DefaultLineHeight, LogicalScrollSize);
 
-                if(TextView.SetScrollData(new Size(_viewPort.Width, _viewPort.Height * TextView.DefaultLineHeight), _extent))
+                if(TextView.SetScrollData(new Size(_viewPort.Width * TextView.DefaultLineHeight, _viewPort.Height * TextView.DefaultLineHeight), _extent))
                 {
                     TextView.Redraw();
                 }
@@ -1071,7 +1071,7 @@ namespace AvaloniaEdit.Editing
 
         Action ILogicalScrollable.InvalidateScroll { get; set; }
 
-        Size ILogicalScrollable.ScrollSize => new Size(Bounds.Width, 2);
+        Size ILogicalScrollable.ScrollSize => new Size(2, 2);
 
         Size ILogicalScrollable.PageScrollSize => throw new NotImplementedException();
 
@@ -1085,7 +1085,7 @@ namespace AvaloniaEdit.Editing
             }
             set
             {
-                TextView.SetScrollOffset(new Vector(value.X, value.Y * TextView.DefaultLineHeight));
+                TextView.SetScrollOffset(new Vector(value.X * TextView.DefaultLineHeight, value.Y * TextView.DefaultLineHeight));
 
                 _offset = value;
             }
@@ -1093,7 +1093,7 @@ namespace AvaloniaEdit.Editing
 
         Size IScrollable.Viewport => _viewPort;
 
-        public bool CanHorizontallyScroll { get; set; } = false;
+        public bool CanHorizontallyScroll { get; set; } = true;
 
         public bool CanVerticallyScroll { get; set; } = true;
     }
